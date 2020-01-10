@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <title>XesMinder</title>
+
+        <link href="favicon.ico" type="image/x-icon" rel="shortcut icon">
+        <link rel="stylesheet" href="./kityminder.core.css" rel="stylesheet">
+
+        <style type="text/css">
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                height: 100%;
+                background: transparent;
+            }
+
+            #minder-view {
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                overflow-y: hidden;
+            }
+
+        </style>
+
+        <script type="text/javascript" src="./kity.min.js"></script>
+    </head>
+
+    <body>
+        <script id="minder-view" type="application/kityminder" minder-data-type="json">
+            {
+                "root": {
+                    "data": {
+                        "text": "空主题",
+                        "layout_mind_offset":{
+                          "x":25,
+                          "y":25
+                        }
+                    }
+                  }
+            }
+        </script>
+    </body>
+
+    <script type="text/javascript" src="./kityminder.core.min.js"></script>
+    <script type="text/javascript">
+        window.onload = function() {
+            window.minder = new kityminder.Minder();
+            watchToolStatus();
+            try {
+                new QWebChannel(qt.webChannelTransport, function(channel) {
+                    content = channel.objects.JsMinder;
+                    window.content = content;
+                    window.content && window.content.readyToSendMsg();
+                })
+            } catch (e) {
+                // console.error(e)
+                //xesMinderImportJson();
+            }
+        }
+
+    </script>
+
+</html>

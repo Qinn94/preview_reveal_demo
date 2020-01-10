@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="screen-orientation" content="portrait">
+    <!-- 删除默认的苹果工具栏和菜单栏。 -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="yes" name="apple-touch-fullscreen" />
+    <meta name="x5-fullscreen" content="true">
+    <meta name="fullscreen" content="yes">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="common/css/reset.css">
+    <link rel="stylesheet" href="common/css/reveal.css">
+    <link rel="stylesheet" href="common/css/theme/white.css">
+    <style>
+        .reveal .slides{margin:0!important;width:100%!important;height:100%!important;}
+        .reveal .slides > section{width:100%;height:100%;margin:0 auto;padding:0;}
+        .reveal iframe{width:100%;height:100%;max-width: 100%;max-height: 100%;}
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            <section>
+                <iframe data-src="01/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="02/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="03/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="04/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="05/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="06/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="07/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="08/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="09/index.html"></iframe>
+            </section>
+            <section>
+                <iframe data-src="10/index.html"></iframe>
+            </section>
+        </div>
+    </div>
+    <script src='common/js/reveal.js'></script>
+    <script> 
+        Reveal.initialize({
+            dependencies: [
+                { src: 'common/plugin/markdown/marked.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'common/plugin/markdown/markdown.js', condition: function () { return !!document.querySelector('[data-markdown]'); } },
+                { src: 'common/plugin/highlight/highlight.js', async: true },
+                { src: 'common/plugin/search/search.js', async: true },
+                { src: 'common/plugin/zoom-js/zoom.js', async: true },
+                { src: 'common/plugin/notes/notes.js', async: true }
+            ],
+            width:'100%',
+            height:'100%',
+            controls: true,
+           // progress: true,
+            center: true,
+            transition: 'fade', // none/fade/slide/convex/concave/zoom
+            backgroundTransition: 'fade',
+            //touch:'true',
+            slideNumber:'c/t',
+            preloadIframes: true,
+            viewDistance: 2
+        });
+    </script>
+</body>
+</html>
