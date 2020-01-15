@@ -8,15 +8,14 @@ class Animation{
                     'name': 'none',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(pageData.Item[index].ID).style.display = 'inline-flex'    
+                        this.domShow(index)   
                     }
                 },
                 '1': {
                     'name': 'None1',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(pageData.Item[index].ID).style.display = 'inline-flex'
-                        
+                        this.domShow(index)    
                     }
                 },
                 '2': {
@@ -88,7 +87,7 @@ class Animation{
                         this.domAnimation(index, 'JumpIn', pageData.Item[index].curEffectDuration, 'AnimationA', Math.ceil(pageData.Item[index].curEffectDuration / 1000))
                     }
                 },
-                '11': {
+                '12': {
                     // 螺旋
                     'name': 'FlipIn',
                     'type': 0,
@@ -96,7 +95,7 @@ class Animation{
                         this.domAnimation(index, 'FlipIn', pageData.Item[index].curEffectDuration, 'AnimationA')
                     }
                 },
-                '12': {
+                '11': {
                     // 飞旋
                     'name': 'SpiralIn',
                     'type': 1,
@@ -112,14 +111,14 @@ class Animation{
                     'name': 'none',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'inline-flex'
+                        this.domShow(index)
                     },
                 },
                 '16': {
                     'name': 'None2',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'inline-flex'
+                        this.domShow(index)
                     },
                 },
                 '32': {
@@ -160,7 +159,7 @@ class Animation{
                     'name': 'Custom',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'inline-flex'
+                        this.domShow(index)
                     }
                 },
                 '112': {
@@ -174,7 +173,7 @@ class Animation{
                     'name': 'TypeWriter',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'inline-flex'
+                        this.domShow(index)
                     }
                 }
             },
@@ -184,14 +183,14 @@ class Animation{
                     'name': 'none',
                     'type': 0,
                     'animation': (index) => {
-                            document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'none'
+                        this.domHide(index)
                     },
                 },
                 '256': {
                     'name': 'None3',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'none'
+                        this.domHide(index)
                         
                     },
                 },
@@ -260,17 +259,17 @@ class Animation{
                     'name': 'JumpOut',
                     'type': 0,
                     'animation': (index) => {
-                        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'none'
+                        this.domAnimation(index, 'JumpOut', pageData.Item[index].curEffectDuration, 'AnimationD')
                     }
                 },
-                '2816': {
+                '3072': {
                     'name': 'FlipOut',
                     'type': 0,
                     'animation': (index) => {
                         this.domAnimation(index, 'FlipOut', pageData.Item[index].curEffectDuration, 'AnimationD')
                     }
                 },
-                '3072': {
+                '2816': {
                     'name': 'SpiralOut',
                     'type': 0,
                     'animation': (index) => {
@@ -292,6 +291,7 @@ class Animation{
             'DISSAPPEAREND': 3072
         }
         this.CURTIMELINEIDX = 0 // 当前进行到的动画顺序
+        this.animateFlag = true
     }
 
     init(){
@@ -318,7 +318,10 @@ class Animation{
             // 34 pagedown 向右箭头
             // 下一步
             if (event.keyCode == 39) {
-                _this.playNext()
+                if(_this.animateFlag == true){
+                    _this.animateFlag = false
+                    _this.playNext()
+                }   
             }
 
             // 33 pageup 向左箭头
@@ -331,7 +334,10 @@ class Animation{
         // 下一个动画
         $("#rightArrow").on('click', function () {
             // debugger
-            _this.playNext()
+            if(_this.animateFlag == true){
+                _this.animateFlag = false
+                _this.playNext()
+            }
         })
 
         // 上一个动画
@@ -525,23 +531,6 @@ class Animation{
      * @description 添加音频
      */
     addAudio(itemObj, idx) {
-        // this.initAudio({
-        //     ID: itemObj.ID,
-        //     src: itemObj.AudioUrl,
-        //     wrap: '#' + itemObj.ID,
-        //     // wrap: '#container',
-        //     Auto: itemObj.AudioAuto,
-        //     Loop: itemObj.AudioLoop,
-        // })
-
-        // $("#" + itemObj.ID).css({
-        //     position: 'absolute',
-        //     left: itemObj.X / DomBase + 'rem',
-        //     top: itemObj.Y / DomBase + 'rem',
-        //     zIndex: 3,
-        //     display: 'inline-flex',
-        //     justifyContent: 'left',
-        // })
 
         var order = this.getOrderArr(itemObj.ID)
         var curEffectType = this.getEffectType(order[0], false)
@@ -583,22 +572,6 @@ class Animation{
         })  
     }
 
-    // //解析item数据和事件
-    // initItemData(){
-    //     //解析item数据
-    //     this.PAGEDATA.Item.forEach(itemObj => {
-    //         //渲染思维导图
-    //         if(itemObj.ContentJson != undefined){
-    //             this.minderRender(itemObj)
-    //         }
-
-    //         //按钮
-    //         if (itemObj.Target != undefined) {
-    //             // 绑定元素事件
-    //             this.initButtonEvent(itemObj.ID)
-    //         }
-    //     })
-    // }
 
     //神奇按钮
     initButtonEvent(id) {
@@ -702,6 +675,7 @@ class Animation{
             } else {
                 // 没有对应的动画 元素直接出现
                 $("#" + id).show()
+                //this.animateFlag = true
             }
         }
 
@@ -719,6 +693,7 @@ class Animation{
             } else {
                 // 没有对应的动画 元素显示
                 $("#" + id).show()
+                //this.animateFlag = true
             }
         }
 
@@ -731,6 +706,7 @@ class Animation{
             } else {
                 // 没有对应的动画 元素消失
                 $("#" + id).hide()
+                //this.animateFlag = true
             }
         }
     }
@@ -873,68 +849,71 @@ class Animation{
             document.getElementById(items[index].ID).style.display = 'inline-flex'
         }
     }
+    //dom元素直接出现
+    domShow(index){
+        this.animateFlag = true
+        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'inline-flex'
+    }
+    //dom元素直接消失
+    domHide(index){
+        this.animateFlag = true
+        document.getElementById(this.PAGEDATA.Item[index].ID).style.display = 'none'
+    }
+
     /**
      * @description dom 元素动画
      */
     domAnimation(index, type, time, animateType, count) {
         var animateFlag = animateType
-        $("#" + this.PAGEDATA.Item[index].ID).css({
-            'animation-play-state':'paused',
-            '-webkit-animation-play-state':'paused'
-        })
         // debugger
         // 螺旋进入
         var _this = this
         if (type == 'FlipIn') {
             this.createFlipInAnimation(index, time)
+            _this.animateFlag = true
             return
         }
 
         // 螺旋淡出
         if (type == 'FlipOut') {
             this.createFlipOutAnimation(index, time)
+            _this.animateFlag = true
             return
         }
 
         // 跳跃进入
-        if (type == 'JumpIn') {
-            this.createJumpInAnimation(index, time, count)
-            return
-        }
+        // if (type == 'JumpIn') {
+        //     this.createJumpInAnimation(index, time, count)
+        //     _this.animateFlag = true
+        //     return
+        // }
 
-        // 跳出
-        if (type == 'JumpOut') {
-            this.createJumpOutAnimation(index, time, count)
-            return
-        }
-
+        // // 跳出
+        // if (type == 'JumpOut') {
+        //     this.createJumpOutAnimation(index, time, count)
+        //     _this.animateFlag = true
+        //     return
+        // }
         if (animateType == 'AnimationA') {
-            console.log('aaaaaa')
             $("#" + this.PAGEDATA.Item[index].ID)
-                .css({ display: 'inline-flex','animation-play-state':'running',
-                '-webkit-animation-play-state':'running' })
+                .css({ display: 'inline-flex'})
                 .addClass(type)
                 .addClass('animated')
                 // 动画时间
                 .css('animation-duration', time + 'ms')
         }
         if (animateType == 'AnimationD') {
-            console.log('dddddd')
             $("#" + this.PAGEDATA.Item[index].ID)    
-                .css({ display: 'inline-flex','animation-play-state':'running',
-                '-webkit-animation-play-state':'running' })
+                .css({ display: 'inline-flex'})
                 .addClass(type)
                 .addClass('animated')
                 // 动画时间
                 .css('animation-duration', time + 'ms')
         }
-
         if (animateType == 'AnimationT') {
-            console.log('tttttt')
             count = count.toString()
             $("#" + this.PAGEDATA.Item[index].ID)
-                .css({ display: 'inline-flex' ,'animation-play-state':'running',
-                '-webkit-animation-play-state':'running'})
+                .css({ display: 'inline-flex'})
                 .addClass(type)
                 .addClass('animated')
                 .css('animation-duration', time + 'ms')
@@ -961,12 +940,15 @@ class Animation{
                 .css('animation-iteration-count', '1')
                 .css('-webkit-animation-iteration-count', '1')
             }
+            _this.animateFlag = true
         })
+        
     }
     /**
      * @description 创建螺旋进入动画
      */
     createFlipInAnimation(index, time) {
+        var _this = this
         var id = this.PAGEDATA.Item[index].ID
         var dom = $("#" + this.PAGEDATA.Item[index].ID)
         var width = parseInt(dom.width())
@@ -1064,8 +1046,8 @@ class Animation{
 
         var animationClass =
             ` .FlipIn_${id} {
-            animation: FlipInX_${id} FlipInY_${id};
-            -webkit-animation: FlipInX_${id} FlipInY_${id};
+            animation: FlipInX_${id},FlipInY_${id};
+            -webkit-animation: FlipInX_${id},FlipInY_${id};
             animation-duration: ${time}ms;
         }`;
 
@@ -1077,7 +1059,7 @@ class Animation{
             .addClass('FlipIn_' + id)
 
         $("#" + this.PAGEDATA.Item[index].ID).on('animationend', function () {
-            $("#" + this.PAGEDATA.Item[index].ID)
+            $("#" + _this.PAGEDATA.Item[index].ID)
                 .removeClass('FlipIn_' + id)
                 .removeClass('animated')
         })
@@ -1086,6 +1068,7 @@ class Animation{
      * @description 创建螺旋退出动画
      */
     createFlipOutAnimation(index, time) {
+        var _this = this
         var id = this.PAGEDATA.Item[index].ID
         var dom = $("#" + this.PAGEDATA.Item[index].ID)
         var width = parseInt(dom.width())
@@ -1183,8 +1166,8 @@ class Animation{
 
         var animationClass =
             ` .FlipOut_${id} {
-            animation: FlipOutX_${id} FlipOutY_${id};
-            -webkit-animation: FlipOutX_${id} FlipOutY_${id};
+            animation: FlipOutX_${id},FlipOutY_${id};
+            -webkit-animation: FlipOutX_${id},FlipOutY_${id};
             animation-duration: ${time}ms;
         }`;
 
@@ -1196,10 +1179,11 @@ class Animation{
             .addClass('FlipOut_' + id)
 
         $("#" + this.PAGEDATA.Item[index].ID).on('animationend', function () {
-            $("#" + this.PAGEDATA.Item[index].ID)
+            $("#" + _this.PAGEDATA.Item[index].ID)
                 .css({ display: 'none' })
                 .removeClass('FlipOut_' + id)
                 .removeClass('animated')
+            console.log(11111)
         })
     }
     /**
@@ -1378,6 +1362,7 @@ class Animation{
                 $('#rightArrow').css({
                     opacity:.3
                 })
+                this.animateFlag = true
             }
             else{
                 this.playNextAnimation()
@@ -1386,7 +1371,7 @@ class Animation{
                 })
             }
                 
-        }
+        }    
     }
     
     playLast() {
@@ -1412,33 +1397,6 @@ class Animation{
     }
 
     
-    /**
-     * @description 隐藏当前页
-     */
-    // hideCurPage(index) {
-    //     // console.log(index)
-    //     // console.log(this.PAGEDATA[index])
-    //     var items = this.PAGEDATA[index].data.Item
-    //     // console.log(items)
-    //     this.hideBackgroundImg(index)
-    //     if (items == undefined) { return }
-    //     for (let i = 0; i < items.length; i++) {
-    //         // 将神奇按钮触发idx置为0
-    //         items[i].TargetIdx = 0
-    //         document.getElementById(items[i].ID).style.display = 'none'
-    //         if (items[i].PaintType == 'Audio') {
-    //             // 当音频没有使用跨页播放，停止音乐
-    //             // 当音频使用了跨页播放，则不停止音乐播放
-    //             if (items[i].AudioCrosspage != 'true' && !document.getElementById('audio' + items[i].ID).paused) {
-    //                 var id = items[i].ID
-    //                 $("#" + id + " .mask").click()
-    //             }
-    //         }
-    //         if (items[i].PaintType == 'Video') {
-    //             $("#" + items[i].ID + ' video')[0].pause()
-    //         }
-    //     }
-    // }
     /**
      * @description 播放下一个小动画 修改材质类型 设置动画持续延迟时间类型等参数
      */

@@ -232,7 +232,7 @@
     transform: translate3d(0, 0, 0) rotate3d(0, 0, 1, 0);
   }
 }
-.JumpIn {
+/* .JumpIn {
   -webkit-animation-name: JumpIn;
   animation-name: JumpIn;
 }
@@ -257,7 +257,7 @@
     -webkit-transform: translate3d(0, 0, 0) rotate3d(0, 0, 1, 0);
     transform: translate3d(0, 0, 0) rotate3d(0, 0, 1, 0);
   }
-}
+} */
 .SpiralIn {
   -webkit-animation-name: SpiralIn;
   animation-name: SpiralIn;
@@ -322,5 +322,24 @@
   to {
     -webkit-transform: skew(30deg, 0) translate3d(0, 0, 0);
     transform: skew(30deg, 0) translate3d(0, 0, 0);
+  }
+}
+.JumpOut {
+  -webkit-animation-name: JumpOut;
+  animation-name: JumpOut;
+}
+@keyframes JumpOut {
+  from {
+    -webkit-transform: skew(-30deg, 0) translate3d(0, 0, 0);
+    transform: skew(-30deg, 0) translate3d(0, 0, 0);
+  }
+  50% {
+    -webkit-transform: skew(30deg, 0) translate3d(100%, -100%, 0);
+    transform: skew(30deg, 0) translate3d(100%, -100%, 0);
+  }
+  
+  to {
+    -webkit-transform: skew(-30deg, 0) translate3d(200%, 0, 0);
+    transform: skew(-30deg, 0) translate3d(200%, 0, 0);
   }
 }
